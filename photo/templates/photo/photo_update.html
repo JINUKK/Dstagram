@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}
+사진 수정
+{% endblock %}
+
+{% block content %}
+<br>
+<div class="row">
+    <div class="col"></div>
+    <div class="col-6">
+        <form action="" method="post" enctype="multipart/form-data">
+            <div class="alert alert-primary">사진 정보를 수정하세요.</div>
+            {% csrf_token %}
+            {{form.as_p}}
+            <input type="submit" value="수정" class="btn btn-outline-primary">
+        </form>
+    </div>
+    <div class="col"></div>
+</div>
+{% endblock %}

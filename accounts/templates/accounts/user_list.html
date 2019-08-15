@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block title %}
+
+{% endblock %}
+
+{% block content %}
+<style>
+.card-img {
+    width : 44px;
+    height : 44px;
+    border: 1px solid #B2BABB;
+    border-radius: 50%;
+}
+</style>
+
+<br>
+{% load static %}
+{% load follow_filter %}
+<div class="row">
+    <div class="col-2"></div>
+    <div class="col-7">
+         <table class="table table-borderless">
+            <tbody>
+            {% for object in object_list %}
+            <tr>
+                <td width="1">
+                    {% if object.profile %}
+                        <img src="{{object.profile.url}}" class="card-img">
+                    {% else %}
+                        <img src="{% static 'images/default.jpg' %}" class="card-img">
+                    {% endif %}
+                </td>
+                <td class="align-text-top">
+                    <div style="font-weight: bold; font-size: 0.9em; margin-top: -7px;">{{object.username}}</div>
+                    <div class="text-muted" style="font-size: 0.9em; margin-top: -3px;">{{object.first_name}}</div>
+                    {% if user in object|follower_filter %}
+                    <div class="text-muted" style="font-size: 0.8em; margin-top: -2px;">회원님을 팔로우합니다.</div>
+                    {% endif %}
+                </td>
+                <td class="text-right">
+                    <a href="{% url 'accounts:follow_button' object.id %}">
+                        {% if user in object|follow_filter %}
+                        <span class="btn btn-xs btn-sm btn-light" style="border: 1px solid #dbdbdb;">팔로잉</span>
+                        {% else %}
+                        <span class="btn btn-xs btn-sm btn-primary">팔로우</span>
+                        {% endif %}
+                    </a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3" class="text-center">유저가 없어요.</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="col-2"></div>
+</div>
+{% endblock %}

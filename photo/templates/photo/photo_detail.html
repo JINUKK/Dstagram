@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block title %}
+{{object.author.username}}
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col"></div>
+    <div class="col-6">
+        <div class="card" style="margin-top:2em;">
+            <img src="{{object.image.url}}" class="card-img-top">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    {{object.author.username}}
+                    {% if user == object.author %}
+                    <span class="float-right">
+                        <a href="{% url 'photo:update' object.id %}" class="btn btn-sm btn-outline-dark">수정</a>
+                        <a href="{% url 'photo:delete' object.id %}" class="btn btn-sm btn-outline-danger">삭제</a>
+                    </span>
+                    {% endif %}
+                </li>
+                <li class="list-group-item">
+                    <a href="{% url 'photo:like' object.id %}" class="float-left btn-like {% if user in object.like.all %} active {% endif %}">Like</a>
+
+                    {% if object.like.all.count %}
+                    <span class="float-left" style="margin-left:0.5em; margin-top:0.2em; font-size: 0.9em; font-weight: bold;">
+                        좋아요 {{object.like.all.count}}개
+                    </span>
+                    {% endif %}
+
+                    <a href="{% url 'photo:save' object.id %}" class="float-right btn-save {% if user in object.favorite.all %} active {% endif %}">Save</a>
+                </li>
+            </ul>
+
+            {% if object.text %}
+            <div class="card-body">
+                <p class="card-text">{{object.text}}</p>
+            </div>
+            {% endif %}
+
+            {# load xxx 해당 태그 기능을 지금부터 사용하겠다. #}
+            {% load disqus_tags %}
+            <div class="card-body">
+                {% disqus_show_comments %}
+            </div>
+        </div>
+    </div>
+    <div class="col"></div>
+</div>
+{% endblock %}

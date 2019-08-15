@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}
+사진 글 작성
+{% endblock %}
+
+{% block content %}
+<br>
+<div class="row">
+    <div class="col"></div>
+    <div class="col-6">
+        <!--// 파일을 보내는 경우 enctype를 추가해야 한다. //-->
+        <form action="" method="post" enctype="multipart/form-data">
+            <div class="alert alert-primary">사진 정보를 입력해주세요.</div>
+            {% csrf_token %}
+            {{form.as_p}}
+            <input type="submit" value="등록" class="btn btn-outline-primary">
+        </form>
+    </div>
+    <div class="col"></div>
+</div>
+{% endblock %}

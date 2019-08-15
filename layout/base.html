@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="{% url 'photo:index' %}" style="font-weight: bold;">
+    <i class="fas fa-camera"></i>
+    | Dstargram
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+    <ul class="navbar-nav mr-auto">
+        {% if user.is_authenticated %}
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'photo:mypage_list' %}">내 게시물</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'photo:like_list' %}"><i class="far fa-heart"> 좋아요</i></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'photo:save_list' %}"><i class="far fa-bookmark"> 저장됨</i></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'photo:create' %}"><i class="far fa-plus-square"> 업로드</i></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'accounts:user_list' %}"><i class="far fa-compass"> 둘러보기</i></a>
+      </li>
+<!--      <li class="nav-item">-->
+<!--        <a class="nav-link" href="{% url 'accounts:follower_list' %}"><i class="fas fa-user-friends"></i> 팔로워</a>-->
+<!--      </li>-->
+<!--      <li class="nav-item">-->
+<!--        <a class="nav-link" href="{% url 'accounts:following_list' %}"><i class="fas fa-user-friends"></i> 팔로잉</a>-->
+<!--      </li>-->
+      {% endif %}
+    </ul>
+    <span class="navbar-text">
+      {% if user.is_authenticated %}
+      <span style="color: #000000; font-weight: bold;">{{user}}&nbsp;&nbsp;</span>
+      {% endif %}
+    </span>
+    <ul class="navbar-nav">
+      {% if user.is_authenticated %}
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'accounts:follower_list' %}"><i class="fas fa-user-plus"></i> 팔로워</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'accounts:following_list' %}"><i class="fas fa-user-check"></i> 팔로잉</a>
+      </li>
+      <li class="nav-item">
+        <a class="btn btn-sm btn-dark" href="{% url 'accounts:signout' %}" style="font-weight: bold; margin-top: 4px;">로그아웃</a>
+      </li>
+      {% else %}
+      <li class="nav-item">
+        <a class="btn btn-sm btn-dark" href="{% url 'accounts:signin' %}" style="font-weight:bold;">로그인</a>
+      </li>
+      &nbsp;&nbsp;
+      <li class="nav-item">
+        <a class="btn btn-sm btn-dark" href="{% url 'accounts:signup' %}" style="font-weight:bold;">회원가입</a>
+      </li>
+      {% endif %}
+    </ul>
+  </div>
+</nav>
+
+{% load static %}
+<!--// <img src="{% static 'images/button_image.png' %}"> //-->
+<style>
+  .btn-like {
+  display:inline-block; /* html 요소의 영역 표시 속성 */
+  width:24px; /* 너비 */
+  height:24px; /* 높이 */
+  background:url({% static 'images/button_image.png' %}); /* 배경 이미지 */
+  background-position:-231px -130px; /* 배경 이미지 포지션 */
+  text-indent:-9999px; /* 영역 안에 있는 텍스트의 들여쓰기 */
+  overflow:hidden; /* 영역 바같으로 밀려난 컨텐츠의 표시 여부 */
+  border:none; /* 테두리 여부 */
+  }
+  /*
+   어떤 요소를 클릭했을 때, class를 더하거나 빼서 효과를 변경한다.
+  */
+  .btn-like.active {
+  background-position:-231px -104px;
+  }
+
+  .btn-save {
+  display:inline-block;
+  /*
+  inline : text 형태 컨텐츠가 있는 만큼 영역을 차지하는 형태, 한줄에 여러 요소가 있을 수 있다.
+  block : 한 줄을 단독으로 차지하고, 크기는 지정할 수 있다.
+  inline-block : text 형태로 한 줄에 여러 요소가 함께 있을 수 있지만, 크기도 지정할 수 있다.
+  */
+  width:24px;
+  height:24px;
+  background:url({% static 'images/button_image.png' %});
+  background-position:-208px -255px;
+  text-indent:-9999px;
+  overflow:hidden;
+  border:none;
+  }
+
+  .btn-save.active {
+  background-position:-130px -255px;
+  }
+</style>
+
+<!-- //
+<div class="btn-like"></div>
+<div class="btn-save"></div>
+//-->
+
+
+  {% if messages %}
+  <div class="row">
+    <div class="col"></div>
+    <div class="col-6">
+      {% for message in messages %}
+        <div class="alert alert-danger">{{message}}</div>
+      {% endfor %}
+    </div>
+    <div class="col"></div>
+  </div>
+  {% endif %}
+{% block content %}
+{% endblock %}
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script type="text/javascript">
+  $(function() {
+  $('.btn-like').click(function(e) {
+      //e.preventDefault();
+      //$(this).toggleClass('active');
+      //$(this).blur();
+  });
+
+  $('.btn-save').click(function(e) {
+      //e.preventDefault();
+      //$(this).toggleClass('active');
+      //$(this).blur();
+  });
+  });
+</script>
+
+</body>
+</html>

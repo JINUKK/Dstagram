@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% block title %}
+Dstagram
+{% endblock %}
+
+{% block content %}
+<style>
+.card-img-top {
+    object-fit: cover;
+}
+.card-img-hover {
+    background-color:rgba(0,0,0,0.7);
+}
+.like-text {
+    position: absolute;
+    color: #ffffff;
+	top: 50%;
+	left: 35%;
+	transform: translate( -50%, -50% );
+	opacity: 0;
+}
+.save-text {
+    position: absolute;
+    color: #ffffff;
+	top: 50%;
+	left: 65%;
+	transform: translate( -50%, -50% );
+	opacity: 0;
+}
+
+.card:hover .card-img-top {
+  opacity: 0.5;
+}
+
+.card:hover .like-text {
+  opacity: 1;
+}
+
+.card:hover .save-text {
+  opacity: 1;
+}
+</style>
+
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md">
+        <div class="container">
+            <div class="row">
+                {% for object in object_list %}
+                <div class="col-md-4">
+                <div class="card" style="margin-top:2em; position: relative;">
+                    <a href="{{object.get_absolute_url}}" class="card-img-hover">
+                        <img src="{{object.image.url}}" class="card-img-top" style="backgrond-color: #000000;">
+                    </a>
+                    {% if object.text %}
+                    <div class="card-body">
+                        <p class="card-text">{{object.text}}</p>
+                    </div>
+                    {% endif %}
+                    <div>
+                        <span class="like-text" style="font-size: 1.2em;"><i class="fas fa-heart"> {{object.like.all.count}}</i></span>
+                        <span class="save-text" style="font-size: 1.2em;"><i class="fas fa-bookmark"> {{object.favorite.all.count}}</i></span>
+                    </div>
+                </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-1"></div>
+</div>
+{% endblock %}
