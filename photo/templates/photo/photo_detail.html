@@ -4,6 +4,16 @@
 {% endblock %}
 
 {% block content %}
+<style>
+.card-img {
+    width : 32px;
+    height : 32px;
+    border: 1px solid #B2BABB;
+    border-radius: 50%;
+}
+</style>
+
+{% load static %}
 <div class="row">
     <div class="col"></div>
     <div class="col-6">
@@ -11,7 +21,12 @@
             <img src="{{object.image.url}}" class="card-img-top">
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">
-                    {{object.author.username}}
+                    {% if object.author.profile %}
+                        <img src="{{object.author.profile.url}}" class="card-img">
+                    {% else %}
+                        <img src="{% static 'images/default.jpg' %}" class="card-img">
+                    {% endif %}
+                    <span style="font-weight: bold; margin-left: 10px;">{{object.author.username}}</span>
                     {% if user == object.author %}
                     <span class="float-right">
                         <a href="{% url 'photo:update' object.id %}" class="btn btn-sm btn-outline-dark">수정</a>
