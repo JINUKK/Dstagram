@@ -49,20 +49,25 @@ Dstagram
             <div class="row">
                 {% for object in object_list %}
                 <div class="col-md-4">
-                <div class="card" style="margin-top:2em; position: relative;">
-                    <a href="{{object.get_absolute_url}}" class="card-img-hover">
-                        <img src="{{object.image.url}}" class="card-img-top" style="backgrond-color: #000000;">
-                    </a>
-                    {% if object.text %}
-                    <div class="card-body">
-                        <p class="card-text">{{object.text}}</p>
-                    </div>
-                    {% endif %}
-                    <div>
-                        <span class="like-text" style="font-size: 1.2em;"><i class="fas fa-heart"> {{object.like.all.count}}</i></span>
-                        <span class="save-text" style="font-size: 1.2em;"><i class="fas fa-bookmark"> {{object.favorite.all.count}}</i></span>
+                    <div class="card" style="margin-top:2em; position: relative;">
+                        <a href="{{object.get_absolute_url}}" class="card-img-hover">
+                            <img src="{{object.image.url}}" class="card-img-top" style="backgrond-color: #000000;">
+                        </a>
+                        {% if object.text %}
+                        <div class="card-body">
+                            <p class="card-text">{{object.text}}</p>
+                        </div>
+                        {% endif %}
+                        <div>
+                            <span class="like-text" style="font-size: 1.2em;"><i class="fas fa-heart"> {{object.like.all.count}}</i></span>
+                            <span class="save-text" style="font-size: 1.2em;"><i class="fas fa-bookmark"> {{object.favorite.all.count}}</i></span>
+                        </div>
                     </div>
                 </div>
+                {% empty %}
+                <div class="col">
+                    <br>
+                    <div class="text-center">등록된 게시물이 없어요.</div>
                 </div>
                 {% endfor %}
             </div>

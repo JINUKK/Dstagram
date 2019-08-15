@@ -5,5 +5,4 @@ __pycache__
 db.sqlite3
 description.py
 s3_upload.py
-settings.py
 /media
