@@ -133,7 +133,7 @@ AWS_SECRET_ACCESS_KEY = 'erw6vhFTmbRfpsYwm7eQOf7E4RdWeu4GUcAVnkNB'
 
 AWS_REGION = 'ap-northeast-2'
 AWS_STORAGE_BUCKET_NAME = 'static.dstagram'
-AWS_S3_CUSTOM_DOMAIN = '%s.s3.%s.amazonaws.com' % (AWS_STORAGE_BUCKET_NAME, AWS_REGION)
+AWS_S3_CUSTOM_DOMAIN = 's3.%s.amazonaws.com' % (AWS_REGION)
 # AWS_S3_CUSTOM_DOMAIN = AWS_STORAGE_BUCKET_NAME
 AWS_S3_SECURE_URLS = True
 
@@ -151,7 +151,7 @@ AWS_DEFAULT_ACL = 'public-read'
 
 AWS_LOCATION = ''
 
-STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_STORAGE_BUCKET_NAME)
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 DEFAULT_FILE_STORAGE = 'config.s3media.MediaStorage'
