@@ -135,7 +135,7 @@ AWS_REGION = 'ap-northeast-2'
 AWS_STORAGE_BUCKET_NAME = 'static.dstagram'
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.%s.amazonaws.com' % (AWS_STORAGE_BUCKET_NAME, AWS_REGION)
 # AWS_S3_CUSTOM_DOMAIN = AWS_STORAGE_BUCKET_NAME
-AWS_S3_SECURE_URLS = False
+AWS_S3_SECURE_URLS = True
 
 AWS_S3_FILE_OVERWRITE = False
 # True일 경우 같은 파일을 올렸을 때 덮어씌워진다.
